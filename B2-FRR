@@ -1,0 +1,21 @@
+!
+frr version 4.0+cl3.7.15u1
+frr defaults datacenter
+hostname B2
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+router bgp 65001 vrf vrf1
+ bgp router-id 172.16.100.3
+ neighbor swp10 interface remote-as external
+ neighbor swp10 bfd
+ !
+ address-family ipv4 unicast
+  network 10.8.160.0/24
+ exit-address-family
+!
+line vty
+!

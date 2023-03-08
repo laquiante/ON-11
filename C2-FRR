@@ -1,0 +1,28 @@
+!
+frr version 4.0+cl3.7.15u1
+frr defaults datacenter
+hostname C2
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+router bgp 65000 vrf vrf1
+ bgp router-id 172.16.100.2
+ neighbor INTERSWITCH interface remote-as internal
+ neighbor INTERSWITCH bfd
+ neighbor peerlink.4093 interface remote-as internal
+ neighbor peerlink.4093 bfd
+ neighbor swp10 interface remote-as external
+ neighbor swp10 bfd
+ !
+ address-family ipv4 unicast
+  network 10.0.6.0/30
+  neighbor INTERSWITCH next-hop-self
+  neighbor peerlink.4093 next-hop-self
+  neighbor peerlink.4093 soft-reconfiguration inbound
+ exit-address-family
+!
+line vty
+!
